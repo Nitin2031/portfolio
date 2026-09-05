@@ -3,75 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Portfolio of Nitin Jangir, AWS certified DevOps and Cloud Engineer.">
-  <title>Nitin Jangir — DevOps & Cloud Engineer</title>
+  <meta name="description" content="Nitin Jangir — AWS certified DevOps and Cloud Engineer portfolio.">
+  <title>Nitin Jangir | Cloud Systems Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="logo" href="#home" aria-label="Nitin Jangir home"><span>NJ</span><strong>Nitin Jangir</strong></a>
-    <nav aria-label="Main navigation"><a href="#work">Work</a><a href="#expertise">Expertise</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
-    <a class="resume-link" href="resume.pdf" target="_blank">Resume <span>↗</span></a>
+  <header class="topbar">
+    <a href="#lab" class="identity"><span>NJ</span><div><strong>Nitin Jangir</strong><small>Cloud & DevOps Engineer</small></div></a>
+    <nav><a href="#lab">Systems</a><a href="#case-studies">Case studies</a><a href="#profile">Profile</a><a href="#contact">Contact</a></nav>
+    <a class="resume" href="resume.pdf" target="_blank">Open résumé ↗</a>
   </header>
 
   <main>
-    <section class="hero" id="home">
-      <div class="hero-main reveal">
-        <div class="availability"><span></span>Available for DevOps & Cloud roles</div>
-        <p class="overline">AWS CERTIFIED · DEVOPS ENGINEER · JAIPUR, INDIA</p>
-        <h1>I build cloud infrastructure that ships <em>reliably.</em></h1>
-        <p class="hero-summary">Computer Science graduate specializing in Linux, AWS, Docker, Kubernetes, Ansible, Terraform, CI/CD and Monitoring. I design secure infrastructure, automate deployments and turn system behavior into actionable signals.</p>
-        <div class="hero-actions"><a class="button primary" href="#work">View selected work <span>↓</span></a><a class="button ghost" href="mailto:nitinjangir0608@gmail.com">Start a conversation</a></div>
-      </div>
-      <aside class="hero-panel reveal" aria-label="Current profile status">
-        <div class="panel-top"><span>PROFILE / 2026</span><i>ONLINE</i></div>
-        <div class="monogram"><span>NJ</span><div class="orbit one"></div><div class="orbit two"></div><i class="dot d1"></i><i class="dot d2"></i></div>
-        <div class="terminal-lines"><p><span>$</span> role --current<strong>Cloud & DevOps Engineer</strong></p><p><span>$</span> certification --verify<strong>AWS Solutions Architect</strong></p><p><span>$</span> focus --list<strong>Build · Deploy · Observe</strong></p></div>
-      </aside>
-      <div class="metric-row reveal"><article><strong>4</strong><span>production-style projects</span></article><article><strong>1</strong><span>AWS certification</span></article><article><strong>3×</strong><span>competition runner-up</span></article><article><strong>2026</strong><span>B.Tech CSE graduate</span></article></div>
-    </section>
+    <section class="lab" id="lab">
+      <header class="lab-intro">
+        <div><p>INTERACTIVE SYSTEMS MAP / 2026</p><h1>Infrastructure I have<br><em>designed and operated.</em></h1></div>
+        <p>AWS-certified Computer Science graduate working across infrastructure, containers, delivery automation and observability. Select a system to inspect the architecture.</p>
+      </header>
 
-    <section class="section" id="work">
-      <div class="section-heading reveal"><div><span>01</span><p>SELECTED WORK</p></div><h2>Systems, not screenshots.</h2><p>Each project solves a different operational problem—from availability and scheduling to delivery automation and incident detection.</p></div>
+      <div class="system-shell">
+        <aside class="system-picker" aria-label="Select a project">
+          <p>DEPLOYED SYSTEMS</p>
+          <button class="system-button active" data-system="aws" aria-pressed="true"><span>01</span><div><strong>AWS WordPress</strong><small>Highly available web platform</small></div><i></i></button>
+          <button class="system-button" data-system="kubernetes" aria-pressed="false"><span>02</span><div><strong>Kubernetes</strong><small>Multi-node application platform</small></div><i></i></button>
+          <button class="system-button" data-system="jenkins" aria-pressed="false"><span>03</span><div><strong>Jenkins CI/CD</strong><small>Automated static delivery</small></div><i></i></button>
+          <button class="system-button" data-system="observability" aria-pressed="false"><span>04</span><div><strong>Observability</strong><small>Metrics, logs and alerts</small></div><i></i></button>
+          <div class="map-key"><span><i></i>Active traffic</span><span><i></i>Managed service</span></div>
+        </aside>
 
-      <article class="case-study reveal">
-        <div class="case-copy"><span class="case-number">01 / CLOUD ARCHITECTURE</span><h3>Highly Available WordPress on AWS</h3><p>Designed a three-tier WordPress platform with public and private subnets, load balancing, elastic compute and managed data services.</p><ul><li>Separated application and database access with security groups</li><li>Used an ALB and Auto Scaling Group for availability</li><li>Stored database backups in Amazon S3</li></ul><div class="chips"><span>VPC</span><span>EC2</span><span>ALB</span><span>Auto Scaling</span><span>RDS</span><span>S3</span></div></div>
-        <div class="architecture aws-architecture" aria-label="AWS WordPress architecture"><div class="arch-label">AWS / VPC</div><div class="arch-flow"><span class="arch-node external">Users</span><i></i><span class="arch-node purple">Route 53</span><i></i><span class="arch-node purple">ALB</span><i></i><span class="arch-node orange">EC2 ASG</span><i></i><span class="arch-node blue">RDS</span></div><div class="arch-meta"><span>Public subnet</span><span>Private application tier</span><span>Private data tier</span></div></div>
-      </article>
-
-      <div class="case-grid">
-        <article class="project-card reveal"><div class="card-head"><span>02 / KUBERNETES</span><strong>ORCHESTRATION</strong></div><div class="mini-architecture"><span>NodePort</span><i></i><span>WordPress ×3</span><i></i><span>MySQL + PVC</span></div><h3>Kubernetes WordPress Platform</h3><p>Built a multi-node WordPress and MySQL deployment using Calico networking, persistent storage and workload scheduling controls.</p><ul><li>Deployments, StatefulSets and Services</li><li>Secrets and NetworkPolicy isolation</li><li>Rolling updates, rollback, affinity and taints</li></ul><div class="chips"><span>Kubernetes</span><span>Calico</span><span>MySQL</span><span>PVC</span></div></article>
-        <article class="project-card reveal"><div class="card-head"><span>03 / OBSERVABILITY</span><strong>MONITORING</strong></div><div class="mini-architecture"><span>Exporter</span><i></i><span>Prometheus</span><i></i><span>Grafana</span><i></i><span>Slack</span></div><h3>EC2 Observability Stack</h3><p>Implemented host monitoring, dashboards and actionable alerts on AWS EC2 with manually configured open-source tooling.</p><ul><li>CPU, memory, disk and network metrics</li><li>Grafana Node Exporter dashboard</li><li>InstanceDown alerts delivered to Slack</li></ul><div class="chips"><span>Prometheus</span><span>Grafana</span><span>Alertmanager</span><span>Linux</span></div></article>
-        <article class="project-card wide reveal"><div class="card-head"><span>04 / AUTOMATION</span><strong>CI/CD</strong></div><div class="pipeline-visual"><span><b>01</b>GitHub<small>Source</small></span><i></i><span><b>02</b>Jenkins EC2<small>Checkout · Validate</small></span><i></i><span><b>03</b>SSH + rsync<small>Private transfer</small></span><i></i><span><b>04</b>Nginx EC2<small>Production</small></span></div><div class="wide-copy"><div><h3>Jenkins Static-Site Delivery Pipeline</h3><p>Automated delivery from GitHub to an Nginx server across two AWS EC2 instances, including validation and post-deployment health checks.</p></div><div class="chips"><span>Jenkins</span><span>GitHub</span><span>SSH</span><span>rsync</span><span>Nginx</span></div></div></article>
-      </div>
-    </section>
-
-    <section class="section expertise" id="expertise">
-      <div class="section-heading reveal"><div><span>02</span><p>EXPERTISE</p></div><h2>Built around the delivery lifecycle.</h2><p>I work across infrastructure, containers, automation and monitoring—the layers required to operate a service after development ends.</p></div>
-      <div class="expertise-grid">
-        <article class="reveal"><span>01</span><div class="skill-icon">☁</div><h3>Cloud infrastructure</h3><p>AWS, EC2, VPC, RDS, S3, ALB, Auto Scaling, CloudWatch and secure network design.</p></article>
-        <article class="reveal"><span>02</span><div class="skill-icon">⬡</div><h3>Containers</h3><p>Docker, Kubernetes workloads, Services, storage, scheduling and Calico networking.</p></article>
-        <article class="reveal"><span>03</span><div class="skill-icon">⌁</div><h3>Automation</h3><p>Jenkins, GitHub Actions, Git, Terraform, deployment pipelines and repeatable infrastructure.</p></article>
-        <article class="reveal"><span>04</span><div class="skill-icon">◉</div><h3>Observability</h3><p>Prometheus, Grafana, Alertmanager, Node Exporter, Linux services and incident signals.</p></article>
-      </div>
-      <div class="toolbelt reveal"><p>TECHNOLOGY TOOLBELT</p><div><span>AWS</span><span>LINUX</span><span>DOCKER</span><span>KUBERNETES</span><span>TERRAFORM</span><span>JENKINS</span><span>GIT</span><span>PYTHON</span><span>PROMETHEUS</span><span>GRAFANA</span></div></div>
-    </section>
-
-    <section class="section" id="experience">
-      <div class="section-heading reveal"><div><span>03</span><p>EXPERIENCE</p></div><h2>Practice backed by fundamentals.</h2></div>
-      <div class="experience-layout">
-        <div class="timeline">
-          <article class="reveal"><div class="date">MAR — AUG<br><strong>2026</strong></div><div><span>GLOBAL IT PROVIDERS</span><h3>Cloud & DevOps Intern</h3><p>Worked hands-on with Linux, Git, Docker, Kubernetes and CI/CD pipelines while assisting with cloud deployment, automation and monitoring across AWS, Azure and GCP.</p></div></article>
-          <article class="reveal"><div class="date">JUN<br><strong>2026</strong></div><div><span>SOBHASARIA GROUP OF INSTITUTIONS</span><h3>B.Tech in Computer Science</h3><p>Completed undergraduate engineering studies with a focus on practical cloud infrastructure and software systems.</p></div></article>
+        <div class="topology" aria-label="Selected project architecture">
+          <div class="topology-bar"><span id="mapTitle">AWS WORDPRESS / REQUEST PATH</span><div><i></i><b>ARCHITECTURE ONLINE</b></div></div>
+          <div class="map" id="systemMap">
+            <svg class="connections" viewBox="0 0 760 430" preserveAspectRatio="none" aria-hidden="true">
+              <path id="path1" d="M90 215 C170 215 175 110 260 110"></path>
+              <path id="path2" d="M310 110 C390 110 390 215 465 215"></path>
+              <path id="path3" d="M515 215 C590 215 590 110 670 110"></path>
+              <path id="path4" d="M515 215 C590 215 590 325 670 325"></path>
+            </svg>
+            <button class="map-node n1" data-node="0"><span id="nodeIcon1">USR</span><strong id="nodeName1">Users</strong><small id="nodeMeta1">Internet traffic</small></button>
+            <button class="map-node n2" data-node="1"><span id="nodeIcon2">53</span><strong id="nodeName2">Route 53</strong><small id="nodeMeta2">DNS routing</small></button>
+            <button class="map-node n3 featured" data-node="2"><span id="nodeIcon3">ALB</span><strong id="nodeName3">Load Balancer</strong><small id="nodeMeta3">Public subnets</small></button>
+            <button class="map-node n4" data-node="3"><span id="nodeIcon4">EC2</span><strong id="nodeName4">Auto Scaling</strong><small id="nodeMeta4">Application tier</small></button>
+            <button class="map-node n5" data-node="4"><span id="nodeIcon5">RDS</span><strong id="nodeName5">MySQL</strong><small id="nodeMeta5">Private database</small></button>
+            <div class="pulse p1"></div><div class="pulse p2"></div><div class="pulse p3"></div><div class="pulse p4"></div>
+          </div>
         </div>
-        <aside class="credential reveal"><span>VERIFIED CREDENTIAL</span><div class="aws-badge">aws</div><h3>AWS Certified Solutions Architect — Associate</h3><p>Architecture · Security · Resilience · Performance · Cost optimization</p></aside>
+
+        <aside class="system-detail" aria-live="polite">
+          <div class="detail-status"><span id="systemIndex">SYSTEM 01</span><i id="systemState">RESILIENT</i></div>
+          <h2 id="systemTitle">Highly Available WordPress on AWS</h2>
+          <p id="systemSummary">A three-tier architecture designed for secure routing, elastic application capacity and managed database persistence.</p>
+          <div class="detail-block"><span>ENGINEERING DECISIONS</span><ul id="systemDecisions"><li>Public and private subnet separation</li><li>Auto Scaling behind an Application Load Balancer</li><li>RDS access restricted to the application tier</li></ul></div>
+          <div class="detail-block"><span>STACK</span><div class="tech-list" id="systemTech"><b>VPC</b><b>EC2</b><b>ALB</b><b>RDS</b><b>S3</b></div></div>
+          <div class="detail-result"><span>OUTCOME</span><strong id="systemOutcome">Scalable application delivery with isolated data services.</strong></div>
+        </aside>
       </div>
-      <div class="awards reveal"><span>ACHIEVEMENTS / 2024</span><div><article><strong>Runner-up</strong><p>ANANT NETRUNN</p></article><article><strong>Runner-up</strong><p>Robo-Race, E-Summit at IIIT Delhi</p></article><article><strong>Runner-up</strong><p>Robo Fiesta, JECRC Foundation, Jaipur</p></article></div></div>
     </section>
 
-    <section class="contact section" id="contact">
-      <div class="contact-card reveal"><span class="overline">LET'S BUILD SOMETHING RELIABLE</span><h2>Open to DevOps and<br>Cloud Engineering roles.</h2><p>If you are hiring for infrastructure, platform or cloud operations work, I would be glad to discuss how I can contribute.</p><div class="hero-actions"><a class="button primary" href="mailto:nitinjangir0608@gmail.com">nitinjangir0608@gmail.com <span>↗</span></a><a class="button ghost" href="resume.pdf" target="_blank">Download résumé</a></div><footer><span>Jaipur, India</span><span>Available to relocate</span><span>© 2026 Nitin Jangir</span></footer></div>
+    <section class="case-section" id="case-studies">
+      <header class="section-head"><p>02 / ENGINEERING WORK</p><h2>Four systems. Four operational problems.</h2></header>
+      <div class="case-list">
+        <article><span>01</span><div><small>AVAILABILITY</small><h3>AWS Cloud-Based WordPress</h3><p>VPC architecture, load balancing, elastic compute, managed MySQL and backup workflows.</p></div><div class="case-tools">AWS · EC2 · RDS · ALB · ASG · S3</div></article>
+        <article><span>02</span><div><small>ORCHESTRATION</small><h3>Kubernetes WordPress Platform</h3><p>Stateful and stateless workloads, persistent storage, networking, policies and scheduling.</p></div><div class="case-tools">Kubernetes · Calico · MySQL · PVC</div></article>
+        <article><span>03</span><div><small>DELIVERY</small><h3>Jenkins Deployment Pipeline</h3><p>GitHub checkout, asset validation, private SSH transfer and automated Nginx health checks.</p></div><div class="case-tools">Jenkins · Git · SSH · rsync · Nginx</div></article>
+        <article><span>04</span><div><small>OBSERVABILITY</small><h3>EC2 Monitoring & Alerting</h3><p>Host metrics, Grafana dashboards, alert evaluation and real-time Slack notifications.</p></div><div class="case-tools">Prometheus · Grafana · Alertmanager</div></article>
+      </div>
+    </section>
+
+    <section class="profile" id="profile">
+      <div class="profile-copy"><p>03 / PROFILE</p><h2>I connect infrastructure decisions to operational outcomes.</h2><p>My work covers the full delivery path: infrastructure design, Linux administration, container orchestration, automated deployment and production monitoring.</p><div class="capabilities"><span>AWS</span><span>Linux</span><span>Docker</span><span>Kubernetes</span><span>Terraform</span><span>Jenkins</span><span>Git</span><span>Python</span></div></div>
+      <div class="timeline">
+        <article><span>2026</span><div><small>MAR — AUG</small><h3>Cloud & DevOps Intern</h3><strong>Global IT Providers</strong><p>Assisted with cloud deployments, automation and monitoring across AWS, Azure and GCP.</p></div></article>
+        <article><span>2026</span><div><small>EDUCATION</small><h3>B.Tech, Computer Science</h3><strong>Sobhasaria Group of Institutions</strong><p>Graduated June 2026 with practical focus on cloud and software systems.</p></div></article>
+        <article><span>AWS</span><div><small>CERTIFIED</small><h3>Solutions Architect — Associate</h3><strong>Amazon Web Services</strong><p>Secure, resilient, high-performing and cost-optimized architectures.</p></div></article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p>04 / CONTACT</p><h2>Let’s build systems that<br>remain useful after deployment.</h2><div><a href="mailto:nitinjangir0608@gmail.com">nitinjangir0608@gmail.com ↗</a><a href="resume.pdf" target="_blank">Download résumé ↓</a></div><footer><span>Nitin Jangir · Jaipur, India</span><span>Open to DevOps & Cloud roles</span><span>© 2026</span></footer>
     </section>
   </main>
 </body>
