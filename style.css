@@ -27,7 +27,7 @@ h1,h2,h3,p { margin-top: 0; }
 .site-header nav { display: flex; gap: 32px; }
 .site-header nav a { color: var(--muted); font-size: 14px; font-weight: 600; }
 .site-header nav a:hover { color: var(--text); }
-.resume-link { padding: 10px 14px; border: 1px solid var(--line-bright); border-radius: 9px; font-size: 14px; font-weight: 700; }
+.resume-link { padding: 10px 14px; border: 1px solid var(--line-bright); border-radius: 9px; font-size: 14px; font-weight: 400; font-style: normal; }
 .resume-link span { margin-left: 10px; color: var(--accent); }
 
 main { width: min(1240px,calc(100% - 40px)); margin: auto; }
@@ -49,7 +49,7 @@ h1 em { color: var(--accent); font-style: normal; }
 .panel-top i { color: var(--accent); font-style: normal; }
 .monogram { height: 292px; position: relative; display: grid; place-items: center; overflow: hidden; }
 .monogram > span { width: 115px; height: 115px; position: relative; z-index: 2; display: grid; place-items: center; border: 1px solid rgba(98,245,200,.7); border-radius: 28px; color: var(--accent); background: #0b1518; box-shadow: 0 0 60px rgba(98,245,200,.15); font: 900 36px var(--mono); transform: rotate(45deg); }
-.monogram > span::first-letter { transform: rotate(-45deg); }
+.monogram > span b { display: inline-block; transform: rotate(-45deg); font: inherit; }
 .orbit { position: absolute; border: 1px solid rgba(98,245,200,.2); border-radius: 50%; }
 .orbit.one { width: 245px; height: 245px; animation: rotate 15s linear infinite; }
 .orbit.two { width: 315px; height: 145px; transform: rotate(35deg); animation: rotateTilt 12s linear reverse infinite; }
