@@ -1,239 +1,107 @@
-const systems = {
-  aws: {
-    index: "SYSTEM 01",
-    state: "RESILIENT",
-    mapTitle: "AWS WORDPRESS / REQUEST PATH",
+pipeline {
+    agent any
 
-    title: "Highly Available WordPress on AWS",
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+    }
 
-    summary:
-      "A three-tier architecture designed for secure routing, elastic application capacity and managed database persistence.",
+    environment {
+        WEB_SERVER = '172.31.5.150'
+        WEB_USER   = 'ubuntu'
+        SSH_KEY    = '/var/lib/jenkins/.ssh/id_ed25519'
+    }
 
-    decisions: [
-      "Public and private subnet separation",
-      "Auto Scaling behind an Application Load Balancer",
-      "RDS access restricted to the application tier"
-    ],
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Downloading portfolio portfolio from GitHub...'
+                checkout scm
+            }
+        }
 
-    tech: [
-      "VPC",
-      "EC2",
-      "ALB",
-      "RDS",
-      "S3"
-    ],
+        stage('Validate Files') {
+            steps {
+                sh '''
+                    test -f index.html
+                    test -f style.css
+                    test -f script.js
 
-    outcome:
-      "Scalable application delivery with isolated data services.",
+                    echo "Required portfolio files are available"
+                    ls -lh
+                '''
+            }
+        }
 
-    nodes: [
-      ["USR", "Users", "Internet traffic"],
-      ["53", "Route 53", "DNS routing"],
-      ["ALB", "Load Balancer", "Public subnets"],
-      ["EC2", "Auto Scaling", "Application tier"],
-      ["RDS", "MySQL", "Private database"]
-    ]
-  },
+        stage('Test JavaScript') {
+            steps {
+                sh '''
+                    if command -v node >/dev/null 2>&1; then
+                        node --check script.js
+                        echo "JavaScript validation successful"
+                    else
+                        echo "Node.js is not installed; skipping JavaScript syntax check"
+                    fi
+                '''
+            }
+        }
 
-  kubernetes: {
-    index: "SYSTEM 02",
-    state: "SCHEDULED",
-    mapTitle: "KUBERNETES / SERVICE & DATA FLOW",
+        stage('Test SSH Connection') {
+            steps {
+                sh '''
+                    ssh \
+                      -i "${SSH_KEY}" \
+                      -o IdentitiesOnly=yes \
+                      -o BatchMode=yes \
+                      "${WEB_USER}@${WEB_SERVER}" \
+                      'echo "SSH CONNECTION SUCCESSFUL"; hostname; whoami'
+                '''
+            }
+        }
 
-    title: "Multi-node WordPress on Kubernetes",
+        stage('Deploy to Nginx') {
+            steps {
+                sh '''
+                    rsync -avz --delete \
+                      --exclude=".git" \
+                      --exclude=".gitignore" \
+                      --exclude="Jenkinsfile" \
+                      --exclude="README.md" \
+                      -e "ssh -i ${SSH_KEY} -o IdentitiesOnly=yes -o BatchMode=yes" \
+                      ./ "${WEB_USER}@${WEB_SERVER}:/var/www/html/"
+                '''
+            }
+        }
 
-    summary:
-      "A container platform separating stateless WordPress replicas from a persistent MySQL workload across worker nodes.",
+        stage('Verify Deployment') {
+            steps {
+                sh '''
+                    sleep 2
 
-    decisions: [
-      "Three WordPress replicas behind a NodePort Service",
-      "StatefulSet and PVC for MySQL persistence",
-      "Calico NetworkPolicy limits database access"
-    ],
+                    curl \
+                      --fail \
+                      --silent \
+                      --show-error \
+                      "http://${WEB_SERVER}/" \
+                      > /dev/null
 
-    tech: [
-      "Kubernetes",
-      "Calico",
-      "StatefulSet",
-      "PVC",
-      "MySQL"
-    ],
+                    echo "Website returned a successful HTTP response"
+                '''
+            }
+        }
+    }
 
-    outcome:
-      "Repeatable scheduling, controlled traffic and persistent application data.",
+    post {
+        success {
+            echo 'PORTFOLIO DEPLOYED SUCCESSFULLY'
+        }
 
-    nodes: [
-      ["USR", "Users", "External request"],
-      ["NP", "NodePort", "Port 30080"],
-      ["WP", "WordPress ×3", "Deployment"],
-      ["SVC", "MySQL Service", "ClusterIP 3306"],
-      ["PVC", "MySQL + PVC", "StatefulSet"]
-    ]
-  },
+        failure {
+            echo 'PORTFOLIO DEPLOYMENT FAILED'
+        }
 
-  jenkins: {
-    index: "SYSTEM 03",
-    state: "AUTOMATED",
-    mapTitle: "JENKINS / RELEASE FLOW",
-
-    title: "Automated Static-Site Delivery",
-
-    summary:
-      "A Git-driven pipeline that validates and securely transfers a static release between dedicated Jenkins and Nginx EC2 instances.",
-
-    decisions: [
-      "Pipeline configuration stored with application code",
-      "SSH key authentication over the private network",
-      "HTTP health check confirms every deployment"
-    ],
-
-    tech: [
-      "GitHub",
-      "Jenkins",
-      "SSH",
-      "rsync",
-      "Nginx"
-    ],
-
-    outcome:
-      "One-click, repeatable delivery from source control to production.",
-
-    nodes: [
-      ["DEV", "Developer", "Git push"],
-      ["GH", "GitHub", "Main branch"],
-      ["J", "Jenkins EC2", "Validate & build"],
-      ["SSH", "rsync", "Private transfer"],
-      ["NGX", "Nginx EC2", "Production :80"]
-    ]
-  },
-
-  observability: {
-    index: "SYSTEM 04",
-    state: "OBSERVED",
-    mapTitle: "OBSERVABILITY / SIGNAL FLOW",
-
-    title: "EC2 Monitoring & Alerting Stack",
-
-    summary:
-      "A monitoring pipeline that converts Linux host telemetry into dashboards and real-time incident notifications.",
-
-    decisions: [
-      "Node Exporter exposes host-level metrics",
-      "Prometheus evaluates the InstanceDown rule",
-      "Alertmanager routes actionable events to Slack"
-    ],
-
-    tech: [
-      "Node Exporter",
-      "Prometheus",
-      "Grafana",
-      "Alertmanager",
-      "Slack"
-    ],
-
-    outcome:
-      "Visible infrastructure health and rapid notification when a service fails.",
-
-    nodes: [
-      ["EC2", "Linux Host", "CPU · RAM · disk"],
-      ["EXP", "Node Exporter", "Metrics :9100"],
-      ["PRO", "Prometheus", "Scrape & evaluate"],
-      ["GRA", "Grafana", "Dashboards"],
-      ["ALT", "Slack Alerts", "Incident response"]
-    ]
-  }
-};
-
-const $ = selector =>
-  document.querySelector(selector);
-
-const $$ = selector =>
-  [...document.querySelectorAll(selector)];
-
-function renderSystem(key) {
-  const system = systems[key];
-
-  $("#systemIndex").textContent =
-    system.index;
-
-  $("#systemState").textContent =
-    system.state;
-
-  $("#mapTitle").textContent =
-    system.mapTitle;
-
-  $("#systemTitle").textContent =
-    system.title;
-
-  $("#systemSummary").textContent =
-    system.summary;
-
-  $("#systemOutcome").textContent =
-    system.outcome;
-
-  $("#systemDecisions").innerHTML =
-    system.decisions
-      .map(item => `<li>${item}</li>`)
-      .join("");
-
-  $("#systemTech").innerHTML =
-    system.tech
-      .map(item => `<b>${item}</b>`)
-      .join("");
-
-  system.nodes.forEach((node, index) => {
-    const number = index + 1;
-
-    $(`#nodeIcon${number}`).textContent =
-      node[0];
-
-    $(`#nodeName${number}`).textContent =
-      node[1];
-
-    $(`#nodeMeta${number}`).textContent =
-      node[2];
-  });
-
-  $$(".map-node").forEach(node => {
-    node.classList.remove("selected");
-  });
-
-  $(".map-node.n3").classList.add("selected");
+        always {
+            echo "Pipeline completed: ${BUILD_TAG}"
+        }
+    }
 }
-
-/*
- * Change the selected architecture.
- */
-$$(".system-button").forEach(button => {
-  button.addEventListener("click", () => {
-    $$(".system-button").forEach(item => {
-      item.classList.remove("active");
-      item.setAttribute(
-        "aria-pressed",
-        "false"
-      );
-    });
-
-    button.classList.add("active");
-
-    button.setAttribute(
-      "aria-pressed",
-      "true"
-    );
-
-    renderSystem(button.dataset.system);
-  });
-});
-
-/*
- * Highlight a selected architecture node.
- */
-$$(".map-node").forEach(node => {
-  node.addEventListener("click", () => {
-    $$(".map-node").forEach(item => {
-      item.classList.remove("selected");
-    });
-
-    node.classList.add("selected");
-  });
-});
